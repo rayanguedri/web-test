@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+	<article>
+		<h2>{{ publication.titre }}</h2>
+		<div class="metadata">
+			Ecrit le
+			{{ publication.createdAt | date('d/m/Y') }}
+			a
+			{{publication.createdAt | date('H:i')}}</div>
+		<div class="content">
+			<img src="{{ publication.image }}" alt="">
+			<p>{{ publication.contenu }}</p>
+		</div>
+	</article>
+
+	<section id="commmentaires">
+		{% for comment in publication.comments  %}
+			<div class="comment">
+				<div class="row">
+					<div class="col-3">
+						{{comment.auteur}} says :
+						(<small>
+							{{comment.createdAt | date('d/m/Y a H:i')}}
+						</small>)
+					</div>
+					<div class="col">
+						{{ comment.contenu }}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+
+	</section>
+{% endblock %}
