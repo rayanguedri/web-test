@@ -20,14 +20,15 @@
 		{% for comment in publication.comments  %}
 			<div class="comment">
 				<div class="row">
-					<div class="col-3">
-						{{comment.auteur}} says :
-						(<small>
-							{{comment.createdAt | date('d/m/Y a H:i')}}
+					<div class="col-4">
+						{{comment.auteur}} says:<small>
+							({{comment.createdAt | date('d/m/Y')}} {{comment.createdAt | date('H:i')}}
+                            
 						</small>)
+                    
 					</div>
 					<div class="col">
-						{{ comment.contenu }}
+					" {{ comment.contenu }}  "
 					</div>
 				</div>
 			</div>
