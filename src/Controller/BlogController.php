@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\Validator\Constraints\DateTime as ConstraintsDateTime;
 
 class BlogController extends AbstractController
@@ -48,40 +49,37 @@ class BlogController extends AbstractController
      * @Route("/blog/new", name="blog_create")
      * @Route("/blog/{id}/edit" , name = "blof_edit")
      */
-    public function form(Publication $publication = null, Request $request , EntityManagerInterface $manager )
+    public function form(Publication $publication = null, Request $request, EntityManagerInterface $manager)
     {
 
-        if(!$publication){
+        if (!$publication) {
 
             $publication = new Publication;
-
         }
-        
+
 
         $form = $this->createFormBuilder($publication)
             ->add('titre')
             ->add('contenu')
-            ->add('image') 
+            ->add('image')
             ->getForm();
 
-            $form->handleRequest($request);
-        
-            if($form->isSubmitted() && $form->isValid()) {
-                if (!$publication->getId()) {
-                    $publication->setCreatedAt (new \DateTimeImmutable());
-                }
-               
+        $form->handleRequest($request);
 
-                $manager->persist($publication);
-                $manager ->flush();
-
-                return $this->redirectToRoute('blog_show',['id' => $publication->getId()]);
-
-
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!$publication->getId()) {
+                $publication->setCreatedAt(new \DateTimeImmutable());
             }
 
 
-        return $this->render('blog/create.html.twig',[
+            $manager->persist($publication);
+            $manager->flush();
+
+            return $this->redirectToRoute('blog_show', ['id' => $publication->getId()]);
+        }
+
+
+        return $this->render('blog/create.html.twig', [
             'formPublication' => $form->createView(),
             'editMode' =>  $publication->getId() !== null
         ]);
@@ -97,4 +95,17 @@ class BlogController extends AbstractController
             'publication' => $publication
         ]);
     }
+
+    /**
+ * @Route("/blog/show/{id}", name="delete_blog")
+ */
+public function delete($id): Response
+{
+    $entityManager = $this->getDoctrine()->getManager();
+    $publication = $entityManager->getRepository(Publication::class)->find($id);
+    $entityManager->remove($publication);
+    $entityManager->flush();
+
+    return $this->redirectToRoute("blog");
+}
 }
