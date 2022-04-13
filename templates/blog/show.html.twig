@@ -16,6 +16,9 @@
 		</div>
 		<a href="{{ path('delete_blog', {'id': publication.id}) }}" class="btn btn-primary">Supprimer </a>
 		<a href="{{ path('blof_edit', {'id': publication.id}) }}" class="btn btn-primary">Modifier </a>
+		<a href="{{ path('blog_createe', {'id': publication.id}) }}" class="btn btn-primary">Ajouter commentaire </a>
+		
+		
 		
 	</article>
 
@@ -24,6 +27,7 @@
 			<div class="comment">
 				<div class="row">
 					<div class="col-4">
+					
 						{{comment.auteur}} says:<small>
 							({{comment.createdAt | date('d/m/Y')}} {{comment.createdAt | date('H:i')}}
                             

@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+{% form_theme formComment 'bootstrap_4_layout.html.twig' %}
+
+
+{% block body %}
+
+<h1>Cree commentaire  </h1>
+
+{{ form_start(formComment) }}
+
+{{ form_row(formComment.auteur , {'attr' : {'placeholder' : "Auteur"}})  }}
+
+{{ form_row(formComment.contenu, {'attr' : {'placeholder' : "Contenu"}})  }}
+
+<button type="submt" class="btn btn-sucess">
+
+Ajouter
+
+</button>
+
+{{ form_end(formComment) }}
+
+
+
+{% endblock %}
