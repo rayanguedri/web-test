@@ -1,8 +1,7 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
+{% extends 'admin_template/base.html.twig' %}
 
 
+{% block stat %}
 	<article>
 		<h2>{{ publication.titre }}</h2>
 		<div class="metadata">
@@ -16,8 +15,9 @@
 		</div>
 		<a href="{{ path('delete_blog', {'id': publication.id}) }}" class="btn btn-primary">Supprimer </a>
 		<a href="{{ path('blof_edit', {'id': publication.id}) }}" class="btn btn-primary">Modifier </a>
-		<a href="{{ path('blog_createe', {'id': publication.id}) }}" class="btn btn-primary">Ajouter commentaire </a>
+		<a href="{{ path('app_comment_new', {'id': publication.id}) }}" class="btn btn-primary">Ajouter commentaire </a>
 		
+
 		
 		
 	</article>
@@ -35,8 +35,14 @@
                     
 					</div>
 					<div class="col">
-					" {{ comment.contenu }}  "
+					<label>{{ comment.contenu }}</label>
+				
+							<a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-success">Modifier commentaire </a>
+					<a href="{{ path('app_comment_delete', {'id': comment.id}) }}" class="btn btn-danger">supprimer commentaire </a>
+
+					
 					</div>
+			
 				</div>
 			</div>
 		{% endfor %}

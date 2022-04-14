@@ -43,6 +43,13 @@ class Comment
         return $this->id;
     }
 
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+
     public function getAuteur(): ?string
     {
         return $this->auteur;
@@ -90,4 +97,9 @@ class Comment
 
         return $this;
     }
+
+    public function __toString() {
+        return strval($this->id);
+    }
+
 }

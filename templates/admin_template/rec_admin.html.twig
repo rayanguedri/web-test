@@ -1,0 +1,48 @@
+{% extends 'admin_template/base.html.twig' %}
+
+
+{% block body %}
+
+<div class="container">
+
+  <h2>Liste des Reclamations</h2>
+  <p>The .table class adds basic styling (light padding and horizontal dividers) to a table:</p>            
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Medecin</th>
+                <th>Commentaire</th>
+
+        <th>Date Consultation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      {% for c in medecins %}
+        <td>{{c.nom}}</td>
+        <td>{{c.Commentaire}}</td>
+        <td> {{ c.beginAt|date('Y-m-d H:i:s') }}
+        {% if c.etat==0 %}
+                <td> 
+               Non Traitée
+        <td>
+        {% endif %}
+
+  
+  
+  </div>
+
+
+</td>
+<td>
+
+                    <a href="{{path('active_rec', {'id': c.cons_id})}}" class="btn btn-primary pull-right">Traité</a>
+</td>
+
+      </tr>
+         {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

@@ -19,9 +19,19 @@ use Doctrine\ORM\Mapping\Id;
 use app\Form\CommentFormType;
 use Symfony\Component\Validator\Constraints\DateTime as ConstraintsDateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class BlogController extends AbstractController
 {
+     /**
+     * @Route("/admin", name="admin")
+     */
+    public function admin(): Response
+    {
+        
+        return $this->render('admin_template/base.html.twig');
+    }
+    
     /**
      * @Route("/blog", name="blog")
      */
@@ -94,49 +104,7 @@ class BlogController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/blog/neww", name="blog_createe")
-     * @Route("/blog/{id}/editt" , name = "blog_edit")
-     */
-    public function create2(Comment $comment = null, Request $request, EntityManagerInterface $manager)
-    {
 
-        
-
-        if (!$comment) {
-
-            $comment = new Comment;
-        }
-
-    
-
-        $form = $this->createFormBuilder($comment)
-            ->add('auteur')
-            ->add('contenu')
-
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            if (!$comment->getId()) {
-
-                $comment->setCreatedAt(new \DateTimeImmutable());
-            }
-
-
-            $manager->persist($comment);
-            $manager->flush();
-
-            return $this->redirectToRoute('blog_show', ['id' => $comment->getId()]);
-        }
-
-
-
-        return $this->render('blog/Comment.html.twig', [
-            'formComment' => $form->createView()
-        ]);
-    }
 
 
     /**
